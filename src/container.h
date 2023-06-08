@@ -61,7 +61,8 @@ private:
 private:
     void clear_memory() {
         if (elements) {
-
+            alloc.deallocate(elements, size());
+            alloc.destroy(elements);
         }
     }
 

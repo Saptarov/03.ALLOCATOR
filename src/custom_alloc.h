@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-template <class T, size_t capacity = 50>
+template <class T>
 class custom_allocator {
   public:
     typedef T        value_type;
@@ -27,6 +27,11 @@ class custom_allocator {
     }
 
     custom_allocator()
+        : _capacity(1)
+        , _size(0)
+    {}
+
+    custom_allocator(size_t capacity)
         : _capacity(capacity)
         , _size(0)
     {}
