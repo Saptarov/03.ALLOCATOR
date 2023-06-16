@@ -57,5 +57,11 @@ int main () {
             std::cout << " " << k << ":" << v << std::endl;
         }
     }
+    // дополнительный пункт
+    {
+        Container<int> a;
+        a.push_back(0);
+        Container<int> b = a;
+    }
     return 0;
 }

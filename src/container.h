@@ -19,6 +19,11 @@ public:
     Container() noexcept(noexcept(Allocator())) : Container(Allocator())
     {}
 
+    Container(const Container& container)
+    {
+        reallocate(container.size());
+    }
+
     ~Container() {
         clear_memory();
     }
@@ -58,14 +63,17 @@ private:
     pointer end_place =  nullptr;
     pointer cap =         nullptr;
 
-private:
+public:
     void clear_memory() {
         if (elements) {
+            auto range = size();
+            for (size_t i = 0; i < range; ++i) {
+                    alloc.destroy(&elements[i]);
+            }
             alloc.deallocate(elements, size());
-            alloc.destroy(elements);
+            elements = nullptr;
         }
     }
-
     void reallocate(size_type count) {
         auto new_capacity = 2 * count;
         auto allocated_data = alloc.allocate(new_capacity);
